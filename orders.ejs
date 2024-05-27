@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Orders</title>
+    <!-- <link rel="stylesheet" type="text/css" href="/styles.css"> -->
+</head>
+
+<body>
+    <h1>Order List</h1>
+    <table>
+        <tr>
+            <th>Customer ID</th>
+            <th>Meal Name</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
+        <% orders.forEach(order=> { %>
+            <tr>
+                <td>
+                    <%= order.customerId %>
+                </td>
+                <td>
+                    <%= order.meal ? order.meal.name : 'Unknown' %>
+                </td>
+                <td>
+                    <%= order.meal ? order.meal.description : 'No description available' %>
+                </td>
+                <td>
+                    <form action="/updateOrder" method="POST">
+                        <input type="hidden" name="orderId" value="<%= order._id %>">
+                        <select name="status" onchange="this.form.submit()">
+                            <option value="received" <%=order.status==='received' ? 'selected' : '' %>>Received</option>
+                            <option value="cooking" <%=order.status==='cooking' ? 'selected' : '' %>>Cooking</option>
+                            <option value="done" <%=order.status==='done' ? 'selected' : '' %>>Done</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</body>
+
+</html>
